@@ -1,0 +1,27 @@
+#
+# Copyright (c) 2020 Red Hat, Inc.
+# This program and the accompanying materials are made
+# available under the terms of the Eclipse Public License 2.0
+# which is available at https://www.eclipse.org/legal/epl-2.0/
+#
+# SPDX-License-Identifier: EPL-2.0
+#
+
+name: PR check
+on: pull_request
+jobs:
+  multiplatform-image-build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build images
+        uses: docker/build-push-action@v3
+        with:
+          file: Dockerfile
+          platforms: linux/amd64,linux/ppc64le,linux/arm64
+          tags: quay.io/eclipse/che-tls-secret-creator:next
