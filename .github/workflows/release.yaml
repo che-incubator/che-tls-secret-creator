@@ -36,7 +36,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
           registry: quay.io
       - name: Check existing tags
-        run: COMMIT_HASH=$(git rev-parse --short HEAD)
+        run: export COMMIT_HASH=$(git rev-parse --short HEAD)
       - name: Build images
         uses: docker/build-push-action@v3
         with:
