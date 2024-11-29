@@ -36,11 +36,11 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
           registry: quay.io
       - name: Check existing tags
-        run: echo "COMMIT_HASH=${{ github.event.inputs.commitHash }}" >> $GITHUB_ENV
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
       - name: Build images
         uses: docker/build-push-action@v3
         with:
           file: Dockerfile
           platforms: linux/amd64,linux/ppc64le,linux/arm64
-          tags: quay.io/eclipse/che-tls-secret-creator:${{ github.event.inputs.commitHash }}
+          tags: quay.io/eclipse/che-tls-secret-creator:${{ env.COMMIT_HASH }}
           push: true
