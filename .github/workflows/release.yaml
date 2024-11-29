@@ -42,5 +42,5 @@ jobs:
         with:
           file: Dockerfile
           platforms: linux/amd64,linux/ppc64le,linux/arm64
-          tags: quay.io/eclipse/che-tls-secret-creator:${COMMIT_HASH}
+          tags: quay.io/eclipse/che-tls-secret-creator:${{COMMIT_HASH}}
           push: true
