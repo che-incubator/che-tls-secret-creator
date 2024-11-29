@@ -35,10 +35,12 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
           registry: quay.io
+      - name: Check existing tags
+        run: COMMIT_HASH=$(git rev-parse --short HEAD)
       - name: Build images
         uses: docker/build-push-action@v3
         with:
           file: Dockerfile
           platforms: linux/amd64,linux/ppc64le,linux/arm64
-          tags: quay.io/eclipse/che-tls-secret-creator:next
+          tags: quay.io/eclipse/che-tls-secret-creator:${COMMIT_HASH}
           push: true
